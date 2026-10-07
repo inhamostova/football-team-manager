@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/football-team-manager/static/css/main.7acaea2f.css",
+    "main.js": "/football-team-manager/static/js/main.07d3183d.js",
+    "index.html": "/football-team-manager/index.html",
+    "main.7acaea2f.css.map": "/football-team-manager/static/css/main.7acaea2f.css.map",
+    "main.07d3183d.js.map": "/football-team-manager/static/js/main.07d3183d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7acaea2f.css",
+    "static/js/main.07d3183d.js"
+  ]
+}
