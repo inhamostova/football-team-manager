@@ -1,20 +1,26 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { changeFormation, changeTeamName } from '../redux/teamSlice';
+import { addPlayer } from '../redux/playerSlice';
 
 export const App = () => {
   const [isFormVisisble, setIsFormVisisble] = useState(false);
+  const [isAddPlayerFormVisisble, setIsAddPlayerFormVisisble] = useState(false);
 
   const teamName = useSelector(state => state.team.name);
   const teamFormation = useSelector(state => state.team.formation);
 
   const dispatch = useDispatch();
 
-  const handleClick = () => {
+  const handleEditTeamClick = () => {
     setIsFormVisisble(true);
   };
 
-  const handleSubmit = evt => {
+  const handleAddPlayerClick = () => {
+    setIsAddPlayerFormVisisble(true);
+  };
+
+  const handleSubmitEditTeam = evt => {
     evt.preventDefault();
     const form = evt.target;
     const name = form.elements.name.value;
@@ -25,21 +31,51 @@ export const App = () => {
     setIsFormVisisble(false);
   };
 
+  const handleSubmitAddingPlayer = evt => {
+    evt.preventDefault();
+    const form = evt.target;
+    const name = form.elements.name.value;
+    const position = form.elements.position.value;
+    const number = Number(form.elements.number.value);
+    const goals = Number(form.elements.goals.value);
+    const data = {
+      name,
+      position,
+      number,
+      goals,
+    };
+    dispatch(addPlayer(data));
+
+    form.reset();
+  };
+
   return (
     <>
       <h2>Team: {teamName}</h2>
       <h3>Formation: {teamFormation}</h3>
-      <button onClick={handleClick} type="button">
+      <button onClick={handleEditTeamClick} type="button">
         Edit team
       </button>
       {isFormVisisble && (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmitEditTeam}>
           <input type="text" name="name" placeholder="Enter new name..." />
           <input
             type="text"
             name="formation"
             placeholder="Enter new formation..."
           />
+          <button type="submit">Edit</button>
+        </form>
+      )}
+      <button onClick={handleAddPlayerClick} type="button">
+        Add player
+      </button>
+      {isAddPlayerFormVisisble && (
+        <form onSubmit={handleSubmitAddingPlayer}>
+          <input type="text" name="name" placeholder="Player name..." />
+          <input type="text" name="position" placeholder="Player position..." />
+          <input type="number" name="number" placeholder="Player number..." />
+          <input type="number" name="goals" placeholder="Goals..." />
           <button type="submit">Edit</button>
         </form>
       )}
