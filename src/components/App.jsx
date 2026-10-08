@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { changeFormation, changeTeamName } from '../redux/teamSlice';
-import { addPlayer } from '../redux/playerSlice';
+import { addGoal, addPlayer, deletePlayer } from '../redux/playerSlice';
 
 export const App = () => {
   const [isFormVisisble, setIsFormVisisble] = useState(false);
@@ -9,6 +9,7 @@ export const App = () => {
 
   const teamName = useSelector(state => state.team.name);
   const teamFormation = useSelector(state => state.team.formation);
+  const players = useSelector(state => state.players);
 
   const dispatch = useDispatch();
 
@@ -47,6 +48,7 @@ export const App = () => {
     dispatch(addPlayer(data));
 
     form.reset();
+    setIsAddPlayerFormVisisble(false);
   };
 
   return (
@@ -79,6 +81,30 @@ export const App = () => {
           <button type="submit">Edit</button>
         </form>
       )}
+      <ol>
+        {players.map(player => (
+          <li key={player.id}>
+            <h3>{player.name}</h3>
+            <p>{player.position}</p>
+            <p># {player.number}</p>
+            <p>
+              {player.goals} ⚽️
+              <button
+                onClick={() => dispatch(addGoal(player.id))}
+                type="button"
+              >
+                +
+              </button>
+            </p>
+            <button
+              onClick={() => dispatch(deletePlayer(player.id))}
+              type="button"
+            >
+              X
+            </button>
+          </li>
+        ))}
+      </ol>
     </>
   );
 };
