@@ -9,6 +9,7 @@ import {
   resetMatch,
   setOpponent,
   startMatch,
+  MATCH_STATUS,
 } from '../redux/matchSlice';
 
 export const App = () => {
@@ -23,6 +24,8 @@ export const App = () => {
   const ourScore = useSelector(state => state.match.ourScore);
   const opponentScore = useSelector(state => state.match.opponentScore);
   const matchStatus = useSelector(state => state.match.status);
+
+  const isMatchFinished = matchStatus === MATCH_STATUS.finished;
 
   const dispatch = useDispatch();
 
@@ -159,8 +162,23 @@ export const App = () => {
           <button onClick={() => dispatch(resetMatch())} type="button">
             Reset
           </button>
+          {isMatchFinished && (
+            <h3 style={{ color: 'blueviolet' }}>
+              Result: {getResult(ourScore, opponentScore)}
+            </h3>
+          )}
         </div>
       )}
     </>
   );
 };
+
+function getResult(score1, score2) {
+  if (score1 - score2 > 0) {
+    return 'WIN';
+  }
+  if (score1 - score2 < 0) {
+    return 'LOSS';
+  }
+  return 'DRAW';
+}

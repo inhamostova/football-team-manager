@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const matchStatus = {
+export const MATCH_STATUS = {
   notStarted: 'not started',
   live: 'live',
   finished: 'finished',
@@ -10,7 +10,7 @@ const initialState = {
   opponent: '',
   ourScore: 0,
   opponentScore: 0,
-  status: matchStatus.notStarted,
+  status: MATCH_STATUS.notStarted,
 };
 
 const matchSlice = createSlice({
@@ -21,7 +21,7 @@ const matchSlice = createSlice({
       state.opponent = action.payload;
     },
     startMatch(state) {
-      state.status = matchStatus.live;
+      state.status = MATCH_STATUS.live;
     },
     goalForUs(state) {
       state.ourScore += 1;
@@ -30,7 +30,7 @@ const matchSlice = createSlice({
       state.opponentScore += 1;
     },
     finishMatch(state) {
-      state.status = matchStatus.finished;
+      state.status = MATCH_STATUS.finished;
     },
     resetMatch() {
       return initialState;
