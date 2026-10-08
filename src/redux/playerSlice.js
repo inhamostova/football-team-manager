@@ -22,12 +22,8 @@ const playerSlice = createSlice({
       return state.filter(player => player.id !== action.payload);
     },
     addGoal(state, action) {
-      state.map(player => {
-        if (player.id === action.payload) {
-          return (player.goals += 1);
-        }
-        return player;
-      });
+      const player = state.find(player => player.id === action.payload);
+      if (player) player.goals += 1;
     },
   },
 });
