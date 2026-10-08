@@ -2,6 +2,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { changeFormation, changeTeamName } from '../redux/teamSlice';
 import { addGoal, addPlayer, deletePlayer } from '../redux/playerSlice';
+import {
+  finishMatch,
+  goalForOpponent,
+  goalForUs,
+  resetMatch,
+  setOpponent,
+  startMatch,
+} from '../redux/matchSlice';
 
 export const App = () => {
   const [isFormVisisble, setIsFormVisisble] = useState(false);
@@ -10,6 +18,11 @@ export const App = () => {
   const teamName = useSelector(state => state.team.name);
   const teamFormation = useSelector(state => state.team.formation);
   const players = useSelector(state => state.players);
+
+  const opponent = useSelector(state => state.match.opponent);
+  const ourScore = useSelector(state => state.match.ourScore);
+  const opponentScore = useSelector(state => state.match.opponentScore);
+  const matchStatus = useSelector(state => state.match.status);
 
   const dispatch = useDispatch();
 
@@ -49,6 +62,12 @@ export const App = () => {
 
     form.reset();
     setIsAddPlayerFormVisisble(false);
+  };
+
+  const enterOpponent = evt => {
+    evt.preventDefault();
+    const form = evt.target;
+    dispatch(setOpponent(form.elements.opponent.value));
   };
 
   return (
@@ -105,6 +124,43 @@ export const App = () => {
           </li>
         ))}
       </ol>
+
+      {!opponent && (
+        <form onSubmit={enterOpponent}>
+          <input type="text" name="opponent" placeholder="Enter opponent..." />
+          <button type="submit">Enter</button>
+        </form>
+      )}
+
+      {opponent && (
+        <div>
+          <h2>⚽️ MATCH CENTER</h2>
+          <h3>Opponent: {opponent}</h3>
+          <h3>
+            <span>Kolos {ourScore} </span> :{' '}
+            <span>
+              {opponentScore} {opponent}
+            </span>
+          </h3>
+          <h3>Status: {matchStatus}</h3>
+          <button onClick={() => dispatch(goalForUs())} type="button">
+            ⚽️ Kolos goal
+          </button>
+          <button onClick={() => dispatch(goalForOpponent())} type="button">
+            ⚽️ Opponent goal
+          </button>
+          <hr />
+          <button onClick={() => dispatch(startMatch())} type="button">
+            Start match
+          </button>
+          <button onClick={() => dispatch(finishMatch())} type="button">
+            Finish match
+          </button>
+          <button onClick={() => dispatch(resetMatch())} type="button">
+            Reset
+          </button>
+        </div>
+      )}
     </>
   );
 };
