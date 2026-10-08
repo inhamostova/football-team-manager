@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/football-team-manager/static/css/main.7acaea2f.css",
-    "main.js": "/football-team-manager/static/js/main.5fc464c1.js",
+    "main.js": "/football-team-manager/static/js/main.ef109188.js",
     "index.html": "/football-team-manager/index.html",
     "main.7acaea2f.css.map": "/football-team-manager/static/css/main.7acaea2f.css.map",
-    "main.5fc464c1.js.map": "/football-team-manager/static/js/main.5fc464c1.js.map"
+    "main.ef109188.js.map": "/football-team-manager/static/js/main.ef109188.js.map"
   },
   "entrypoints": [
     "static/css/main.7acaea2f.css",
-    "static/js/main.5fc464c1.js"
+    "static/js/main.ef109188.js"
   ]
 }
